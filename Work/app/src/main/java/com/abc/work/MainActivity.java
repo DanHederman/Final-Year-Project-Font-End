@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
         final Button btnLogin = findViewById(R.id.btnLogin);
 
+        Button scannerbtn = findViewById(R.id.Scanbtn);
+
         final Button btnRegisterHere = findViewById(R.id.btnRegisterHere);
 
         btnRegisterHere.setOnClickListener(new View.OnClickListener() {
@@ -30,5 +32,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
+
+        scannerbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openScanner();
+            }
+        });
+
+    }
+
+    public void openScanner(){
+
+        Intent intent = new Intent(this, Scanner.class);
+        startActivity(intent);
     }
 }
