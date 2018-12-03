@@ -20,13 +20,14 @@ public class MainActivity extends AppCompatActivity {
 
         final Button btnLogin = findViewById(R.id.btnLogin);
 
-        final TextView regLink = findViewById(R.id.tvRegisterHere);
+        final Button btnRegisterHere = findViewById(R.id.btnRegisterHere);
 
-        regLink.setOnClickListener(new View.OnClickListener() {
+        btnRegisterHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
-                MainActivity.this.startActivity(registerIntent);
+                Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
+                // finish(); // If you wanna finish the activity
+                startActivity(registerIntent);
             }
         });
     }
