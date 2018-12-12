@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static String URL_LOGIN = "http://83.212.126.190/Login.php";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent registerIntent = new Intent(getApplicationContext(), RegisterActivity.class);
                 // finish(); // If you wanna finish the activity
                 startActivity(registerIntent);
+            }
+        });
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
