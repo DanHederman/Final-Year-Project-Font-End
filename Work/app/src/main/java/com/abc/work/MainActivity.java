@@ -1,8 +1,10 @@
 package com.abc.work;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +26,6 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static String URL_LOGIN = "http://83.212.126.190/Login.php";
 
     private Handler handler;
 
@@ -60,14 +60,14 @@ public class MainActivity extends AppCompatActivity {
 
 
                 final String Username = etUname.length() < 0 ? etUname.getText().toString() : "";
-                final String Password = etPassword.length() < 0 ? etPassword.getText().toString(): "";
+                final String Password = etPassword.length() < 0 ? etPassword.getText().toString() : "";
 
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         HttpURLConnection conn;
 
-                        try{
+                        try {
 
                             URL url = new URL("http://83.212.126.206/Login.php");
                             conn = (HttpURLConnection) url.openConnection();
@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                             conn.setUseCaches(false);
 
                             String builder = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(Username) +
-                                    "&" + URLEncoder.encode("password", "UTF-8") + "=" URLEncoder.encode(Password);
+                                    "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(Password);
 
                             OutputStream os = conn.getOutputStream();
                             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -92,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
                             StringBuilder response = new StringBuilder();
 
-                            if(responseCode == HttpURLConnection.HTTP_OK){
+                            if (responseCode == HttpURLConnection.HTTP_OK) {
 
                                 String line;
                                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                                while((line = reader.readLine()) != null){
+                                while ((line = reader.readLine()) != null) {
                                     response.append(line).append("\n");
                                 }
                             }
@@ -106,44 +106,51 @@ public class MainActivity extends AppCompatActivity {
 
                             //If no errors, log the user in
 
-                            if(result.has("success") && !result.isNull("success")){
+                            if (result.has("success") && !result.isNull("success")) {
                                 success = result.getBoolean("success");
                             }
                             JSONArray errors = new JSONArray();
 
-                            if(result.has("errors") && !result.isNull("errors")){
+                            if (result.has("errors") && !result.isNull("errors")) {
                                 errors = result.getJSONArray("errors");
                             }
 
-                            if(success){
+                            if (success) {
                                 finish();
-                            }
-                            else{
+                            } else {
                                 final StringBuilder errorsString = new StringBuilder();
+                                if (errors.length() > 0) {
+                                    for (int i = 0; i < errors.length(); i++) {
+                                        errorsString.append(errors.getString(i)).append("\n");
+                                    }
+                                }
+
+                                //Handle UI on main thread
+                                handler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new AlertDialog.Builder(MainActivity.this)
+                                                .setTitle("Login Failed")
+                                                .setMessage(errorsString.toString())
+                                                .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.dismiss();
+                                                        if (errorsString.toString() == "Invalid info") {
+                                                            etUname.requestFocus();
+                                                        }
+                                                    }
+                                                }).create()
+                                                .show();
+                                    }
+                                });
                             }
-                        }
-                        catch(Exception e){
+                        } catch (Exception e) {
                             Log.e("LoginActivity", e.getLocalizedMessage());
                         }
                     }
-                })
+                }).start();
             }
         });
-
-        scannerbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openScanner();
-            }
-        });
-
     }
-
-    public void openScanner(){
-
-        Intent intent = new Intent(this, Scanner.class);
-        startActivity(intent);
-    }
-
-
 }
