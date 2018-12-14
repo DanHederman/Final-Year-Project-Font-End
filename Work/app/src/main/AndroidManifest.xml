@@ -22,7 +22,8 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserAreaActivity" />
-        <activity android:name=".Scanner"></activity>
+        <activity android:name=".Scanner" />
+        <activity android:name=".HomeScreenActivity"></activity>
     </application>
 
 </manifest>
