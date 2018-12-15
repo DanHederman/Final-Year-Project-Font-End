@@ -116,7 +116,9 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                             if (success) {
-                                finish();
+                                Intent registerIntent = new Intent(getApplicationContext(), Scanner.class);
+                                // finish(); // If you wanna finish the activity
+                                startActivity(registerIntent);
                             } else {
                                 final StringBuilder errorsString = new StringBuilder();
                                 if (errors.length() > 0) {
