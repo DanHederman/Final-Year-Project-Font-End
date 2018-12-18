@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler((Looper.getMainLooper()));
 
-        final EditText etPassword = findViewById(R.id.etPassword);
-        final EditText etUname = findViewById(R.id.etUname);
+        final EditText etUname = findViewById(R.id.etLogUsername);
+        final EditText etPassword = findViewById(R.id.etLogPassword);
 
         final Button btnLogin = findViewById(R.id.btnLogin);
 
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                final String Username = etUname.length() < 0 ? etUname.getText().toString() : "";
-                final String Password = etPassword.length() < 0 ? etPassword.getText().toString() : "";
+                final String username = etUname.length() < 0 ? etUname.getText().toString() : "";
+                final String password = etPassword.length() < 0 ? etPassword.getText().toString() : "";
 
                 new Thread(new Runnable() {
                     @Override
@@ -76,12 +76,12 @@ public class MainActivity extends AppCompatActivity {
                             conn.setDoInput(true);
                             conn.setUseCaches(false);
 
-                            String builder = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(Username) +
-                                    "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(Password);
+                            String build = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username) +
+                                    "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password);
 
                             OutputStream os = conn.getOutputStream();
                             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                            writer.write((builder));
+                            writer.write(build);
                             writer.flush();
                             writer.close();
                             os.close();
@@ -106,14 +106,14 @@ public class MainActivity extends AppCompatActivity {
 
                             //If no errors, log the user in
 
-                            if (result.has("success") && !result.isNull("success")) {
+                            if (result.has("success") && !result.isNull("success"))
                                 success = result.getBoolean("success");
-                            }
+
                             JSONArray errors = new JSONArray();
 
-                            if (result.has("errors") && !result.isNull("errors")) {
+                            if (result.has("errors") && !result.isNull("errors"))
                                 errors = result.getJSONArray("errors");
-                            }
+
 
                             if (success) {
                                 Intent registerIntent = new Intent(getApplicationContext(), Scanner.class);
