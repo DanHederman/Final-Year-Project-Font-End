@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         try
                         {
-                            URL url = new URL("http://83.212.126.206/Register.php");
+                            URL url = new URL("http://83.212.127.188/Register.php");
                             conn = (HttpURLConnection) url.openConnection();
                             conn.setRequestMethod("POST");
                             conn.setDoOutput(true);

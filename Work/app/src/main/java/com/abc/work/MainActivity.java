@@ -62,14 +62,18 @@ public class MainActivity extends AppCompatActivity {
                 final String username = etUname.length() < 0 ? etUname.getText().toString() : "";
                 final String password = etPassword.length() < 0 ? etPassword.getText().toString() : "";
 
+                /**
+                 * Always run on new thread
+                 * connect & pass user login info to the login.php file
+                 */
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         HttpURLConnection conn;
 
                         try {
-
-                            URL url = new URL("http://83.212.126.206/Login.php");
+                            //83.212.127.188
+                            URL url = new URL("http://83.212.126.206/Login2.php");
                             conn = (HttpURLConnection) url.openConnection();
                             conn.setRequestMethod("POST");
                             conn.setDoOutput(true);
@@ -104,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
                             JSONObject result = new JSONObject(response.toString());
                             boolean success = false;
 
-                            //If no errors, log the user in
+                            /**
+                             * If no errors, log the user in, if errors occur, display to user
+                             */
 
                             if (result.has("success") && !result.isNull("success"))
                                 success = result.getBoolean("success");
