@@ -2,16 +2,15 @@ package com.abc.work;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler((Looper.getMainLooper()));
 
-        final EditText etUname = findViewById(R.id.etLogUsername);
-        final EditText etPassword = findViewById(R.id.etLogPassword);
+        final EditText etUnameLog= findViewById(R.id.etUnameLog);
+        final EditText etPasswordLog = findViewById(R.id.etPasswordLog);
 
         final Button btnLogin = findViewById(R.id.btnLogin);
 
@@ -59,8 +58,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                final String username = etUname.length() < 0 ? etUname.getText().toString() : "";
-                final String password = etPassword.length() < 0 ? etPassword.getText().toString() : "";
+                final String username = etUnameLog.getText().toString();
+                final String password = etPasswordLog.getText().toString();
+                //Log.w("Username", String.valueOf(etLogUsername));
 
                 /**
                  * Always run on new thread
@@ -80,12 +80,13 @@ public class MainActivity extends AppCompatActivity {
                             conn.setDoInput(true);
                             conn.setUseCaches(false);
 
-                            String build = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username) +
+                            String builder = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username) +
                                     "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password);
+                            Log.w("Check Builder", builder);
 
                             OutputStream os = conn.getOutputStream();
                             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
-                            writer.write(build);
+                            writer.write(builder);
                             writer.flush();
                             writer.close();
                             os.close();
@@ -96,47 +97,49 @@ public class MainActivity extends AppCompatActivity {
 
                             StringBuilder response = new StringBuilder();
 
-                            if (responseCode == HttpURLConnection.HTTP_OK) {
-
+                            if(responseCode == HttpURLConnection.HTTP_OK) {
                                 String line;
                                 BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                                while ((line = reader.readLine()) != null) {
+                                while((line = reader.readLine()) != null) {
                                     response.append(line).append("\n");
                                 }
                             }
 
                             JSONObject result = new JSONObject(response.toString());
+
                             boolean success = false;
 
                             /**
                              * If no errors, log the user in, if errors occur, display to user
                              */
 
-                            if (result.has("success") && !result.isNull("success"))
-                                success = result.getBoolean("success");
+                            Log.w("errors check", result.toString());
 
+                            if(result.has("success") && !result.isNull("success"))
+                                success = result.getBoolean("success");
                             JSONArray errors = new JSONArray();
 
-                            if (result.has("errors") && !result.isNull("errors"))
+                            if(result.has("errors") && !result.isNull("errors"))
                                 errors = result.getJSONArray("errors");
 
-
-                            if (success) {
-                                Intent registerIntent = new Intent(getApplicationContext(), Scanner.class);
-                                // finish(); // If you wanna finish the activity
-                                startActivity(registerIntent);
+                            if(success) {
+                                // finishAffinity(); // Close all open activities
+                                Intent loginIntent = new Intent(MainActivity.this, HomeScreenActivity.class);
+                                MainActivity.this.startActivity(loginIntent);
                             } else {
                                 final StringBuilder errorsString = new StringBuilder();
-                                if (errors.length() > 0) {
-                                    for (int i = 0; i < errors.length(); i++) {
+                                if(errors.length() > 0) {
+                                    for(int i = 0; i < errors.length(); ++i) {
                                         errorsString.append(errors.getString(i)).append("\n");
                                     }
                                 }
 
-                                //Handle UI on main thread
+                                // Always handle UI on Main thread
                                 handler.post(new Runnable() {
                                     @Override
                                     public void run() {
+                                        //Toast.makeText(RegisterActivity.this, errorsString.toString(), Toast.LENGTH_LONG);
+
                                         new AlertDialog.Builder(MainActivity.this)
                                                 .setTitle("Login Failed")
                                                 .setMessage(errorsString.toString())
@@ -144,17 +147,16 @@ public class MainActivity extends AppCompatActivity {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int which) {
                                                         dialog.dismiss();
-                                                        if (errorsString.toString() == "Invalid info") {
-                                                            etUname.requestFocus();
-                                                        }
                                                     }
                                                 }).create()
                                                 .show();
                                     }
                                 });
                             }
-                        } catch (Exception e) {
-                            Log.e("LoginActivity", e.getLocalizedMessage());
+                        }
+                        catch(Exception e)
+                        {
+                            Log.e("RegisterActivity", e.getLocalizedMessage());
                         }
                     }
                 }).start();

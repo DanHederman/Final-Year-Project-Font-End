@@ -83,6 +83,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     "&" + URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(username) +
                                     "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(password) +
                                     "&" + URLEncoder.encode("age", "UTF-8") + "=" + a;
+                            Log.w("string", builder);
 
                             OutputStream os = conn.getOutputStream();
                             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -96,7 +97,6 @@ public class RegisterActivity extends AppCompatActivity {
                             int responseCode = conn.getResponseCode();
 
                             StringBuilder response = new StringBuilder();
-
 
                             if(responseCode == HttpURLConnection.HTTP_OK) {
                                 String line;
