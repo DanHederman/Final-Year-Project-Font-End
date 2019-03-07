@@ -52,13 +52,13 @@ public class RegisterActivity extends AppCompatActivity {
                 final String username = etUname.length() > 0 ? etUname.getText().toString() : "";
                 final String password = etPassword.length() > 0? etPassword.getText().toString() : "";
                 final String age = etAge.length() > 0? etAge.getText().toString() : "0";
-
-                // Do Request on Separate thread
+                
                 new Thread(new Runnable() {
 
                     @Override
                     public void run() {
                         HttpURLConnection conn;
+
 
                         try
                         {

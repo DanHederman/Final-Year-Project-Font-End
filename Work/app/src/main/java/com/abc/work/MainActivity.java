@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             //83.212.127.188
-                            URL url = new URL("http://83.212.127.188/Login2.php");
+                            URL url = new URL("http://83.212.127.188/Login.php");
                             conn = (HttpURLConnection) url.openConnection();
                             conn.setRequestMethod("POST");
                             conn.setDoOutput(true);
