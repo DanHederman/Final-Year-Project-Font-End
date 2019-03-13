@@ -44,44 +44,6 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String []{CAMERA}, REQUEST_CAMERA);
     }
-
-    public void onRequestPermissionResult(int requestCode, String permission[], int grantResults[]){
-        switch(requestCode){
-            case REQUEST_CAMERA:
-                if (grantResults.length > 0){
-
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-                    if(cameraAccepted){
-
-                        Toast.makeText(scanbook.this, "Permission granted", Toast.LENGTH_LONG).show();
-                    }
-                    else{
-
-                        Toast.makeText(scanbook.this, "Permission denied", Toast.LENGTH_LONG).show();
-
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-
-                            if(shouldShowRequestPermissionRationale(CAMERA)){
-
-                                displayAlertMessage("You need to allow both permissions", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                                            requestPermissions(new String []{CAMERA}, REQUEST_CAMERA);
-                                        }
-                                    }
-                                });
-                                return;
-                            }
-                        }
-                    }
-                }
-                break;
-        }
-    }
-
     @Override
     public void onResume()
     {
@@ -104,44 +66,22 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
         }
     }
 
+    public void onPause(){
+        super.onPause();
+        scannerView.stopCamera();
+    }
+
     @Override
     public void onDestroy(){
         super.onDestroy();
         scannerView.stopCamera();
     }
 
-    public void displayAlertMessage(String message, DialogInterface.OnClickListener listener){
-
-        new AlertDialog.Builder(scanbook.this)
-                .setMessage(message)
-                .setPositiveButton("OK", listener)
-                .setNegativeButton("Cancel", listener)
-                .create()
-                .show();
-    }
-
     @Override
     public void handleResult(Result result) {
 
-        final String scanResult = result.getText();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Scan result");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                scannerView.resumeCameraPreview(scanbook.this);
-            }
-        });
-        builder.setNeutralButton("Visit", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                Intent intent = new Intent(Intent.ACTION_VIEW , Uri.parse(scanResult));
-                startActivity(intent);
-            }
-        });
-        builder.setMessage(scanResult);
-        AlertDialog alert = builder.create();
-        alert.show();
+        HomeScreenActivity.barcode = (result.getText());
+        Toast.makeText(scanbook.this, "Barcode: " + result.getText().toString(), Toast.LENGTH_LONG).show();
+        onBackPressed();
     }
 }

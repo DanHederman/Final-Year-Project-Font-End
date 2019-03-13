@@ -27,9 +27,10 @@ import java.net.URLEncoder;
 public class MainActivity extends AppCompatActivity {
 
     private Handler handler;
+    public static String Final_user_id;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) { 
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -103,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
 
-                            JSONObject result = new JSONObject(response.toString());
+                            JSONObject result = null;
+                            result = new JSONObject(response.toString());
 
                             boolean success = false;
 
@@ -122,6 +124,8 @@ public class MainActivity extends AppCompatActivity {
 
                             if(success) {
                                 // finishAffinity(); // Close all open activities
+                                Final_user_id = result.getString("user_id");
+                                Log.d("user id: ", Final_user_id);
                                 Intent loginIntent = new Intent(MainActivity.this, HomeScreenActivity.class);
                                 MainActivity.this.startActivity(loginIntent);
                             } else {

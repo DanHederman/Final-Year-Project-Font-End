@@ -32,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-         // Handle UI stuff on main thread
+        // Handle UI stuff on main thread
         handler = new Handler(Looper.getMainLooper());
 
 
@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String username = etUname.length() > 0 ? etUname.getText().toString() : "";
                 final String password = etPassword.length() > 0? etPassword.getText().toString() : "";
                 final String age = etAge.length() > 0? etAge.getText().toString() : "0";
-                
+
                 new Thread(new Runnable() {
 
                     @Override
@@ -152,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                     }
                                                 }).create()
-                                        .show();
+                                                .show();
                                     }
                                 });
                             }
