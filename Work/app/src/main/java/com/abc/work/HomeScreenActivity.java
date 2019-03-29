@@ -39,20 +39,13 @@ public class HomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_screen);
 
         Button scannerbtn = findViewById(R.id.scannerbtn);
-        Button cb = findViewById(R.id.crap);
+
         Button rec = findViewById(R.id.recbtn);
 
         scannerbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openScanner();
-            }
-        });
-
-        cb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkcode();
             }
         });
 
@@ -69,7 +62,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                         HttpURLConnection conn;
 
                         try {
-                            //83.212.127.188
                             URL url = new URL("http://83.212.126.206/pythonpass.php");
                             conn = (HttpURLConnection) url.openConnection();
                             conn.setRequestMethod("POST");
@@ -132,24 +124,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 Intent DisplayRecIntent = new Intent(HomeScreenActivity.this, DisplayRecommendations.class);
                                 HomeScreenActivity.this.startActivity(DisplayRecIntent);
 
-//                        handler.post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                //Toast.makeText(RegisterActivity.this, errorsString.toString(), Toast.LENGTH_LONG);
-//
-//                                new AlertDialog.Builder(HomeScreenActivity.this)
-//                                        .setTitle("Recommendations")
-//                                        .setMessage(noerrorsString.toString())
-//                                        .setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-//                                            @Override
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                                dialog.dismiss();
-//                                            }
-//                                        }).create()
-//                                        .show();
-//                            }
-//                        });
-
                             } else {
                                 final StringBuilder errorsString = new StringBuilder();
                                 if(errors.length() > 0) {
@@ -200,10 +174,5 @@ public class HomeScreenActivity extends AppCompatActivity {
             Intent AddReviewIntent = new Intent(HomeScreenActivity.this, AddReview.class);
             HomeScreenActivity.this.startActivity(AddReviewIntent);
         }
-    }
-
-    public void checkcode(){
-        Log.d("barcode = ", barcode);
-        //Log.d("recommended = ", noerrorsString.toString());
     }
 }
