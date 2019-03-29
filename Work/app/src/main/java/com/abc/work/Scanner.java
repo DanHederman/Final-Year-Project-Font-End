@@ -67,41 +67,6 @@ public class Scanner extends AppCompatActivity implements ZXingScannerView.Resul
      * @param grantResults Tskes in the grant results
      */
 
-    public void onRequestPermissionResult(int requestCode, String permission[], int grantResults[]) {
-        switch (requestCode) {
-            case REQUEST_CAMERA:
-                if (grantResults.length > 0) {
-
-                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-
-                    if (cameraAccepted) {
-
-                        Toast.makeText(Scanner.this, "Permission granted", Toast.LENGTH_LONG).show();
-                    } else {
-
-                        Toast.makeText(Scanner.this, "Permission denied", Toast.LENGTH_LONG).show();
-
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-
-                            if (shouldShowRequestPermissionRationale(CAMERA)) {
-
-                                displayAlertMessage("You need to allow both permissions", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                            requestPermissions(new String[]{CAMERA}, REQUEST_CAMERA);
-                                        }
-                                    }
-                                });
-                                return;
-                            }
-                        }
-                    }
-                }
-                break;
-        }
-    }
 
     /**
      * Method to stop the app asking permission on every startup of the app

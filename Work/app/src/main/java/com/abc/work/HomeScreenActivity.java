@@ -24,7 +24,7 @@ import java.net.URLEncoder;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
-    public static String barcode;
+    public static String barcode = null;
     public static String noerrors1;
     public static JSONArray errors = new JSONArray();
     public static JSONArray noerrors = new JSONArray();
@@ -196,6 +196,10 @@ public class HomeScreenActivity extends AppCompatActivity {
     public void openScanner(){
         Intent intent = new Intent( this, scanbook.class);
         startActivity(intent);
+        if(barcode != null){
+            Intent AddReviewIntent = new Intent(HomeScreenActivity.this, AddReview.class);
+            HomeScreenActivity.this.startActivity(AddReviewIntent);
+        }
     }
 
     public void checkcode(){

@@ -82,6 +82,10 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
 
         HomeScreenActivity.barcode = (result.getText());
         Toast.makeText(scanbook.this, "Barcode: " + result.getText().toString(), Toast.LENGTH_LONG).show();
+        if(HomeScreenActivity.barcode != null){
+            Intent AddReviewIntent = new Intent(scanbook.this, AddReview.class);
+            scanbook.this.startActivity(AddReviewIntent);
+        }
         onBackPressed();
     }
 }
