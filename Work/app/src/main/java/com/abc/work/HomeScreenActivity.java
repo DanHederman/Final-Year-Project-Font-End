@@ -83,7 +83,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                     conn.setDoInput(true);
                     conn.setUseCaches(false);
 
-                    String builder = URLEncoder.encode("param", "UTF-8") + "=" + URLEncoder.encode(fakeuserid);
+                    String builder = URLEncoder.encode("param", "UTF-8") + "=" + URLEncoder.encode(MainActivity.Final_user_id);
                     Log.w("Check Builder", builder);
 
                     OutputStream os = conn.getOutputStream();

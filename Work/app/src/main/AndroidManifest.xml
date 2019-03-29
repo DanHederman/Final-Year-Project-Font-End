@@ -23,7 +23,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".Scanner" />
         <activity android:name=".HomeScreenActivity" />
-        <activity android:name="com.abc.scanner.scanbook" />
         <activity android:name=".scanbook"></activity>
     </application>
 
