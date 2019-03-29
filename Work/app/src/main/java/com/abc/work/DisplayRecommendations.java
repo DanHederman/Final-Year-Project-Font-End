@@ -1,5 +1,6 @@
 package com.abc.work;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -13,6 +14,8 @@ public class DisplayRecommendations extends AppCompatActivity {
 
         TextView recommendations = findViewById(R.id.viewRec);
 
-        recommendations.setText(HomeScreenActivity.noerrors1);
+        recommendations.setText(HomeScreenActivity.noerrorsString);
+
+        recommendations.setTextColor(Color.WHITE);
     }
 }

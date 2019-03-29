@@ -26,9 +26,11 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     public static String barcode;
     public static String noerrors1;
+    public static JSONArray errors = new JSONArray();
+    public static JSONArray noerrors = new JSONArray();
     private Handler handler;
 
-    public final StringBuilder noerrorsString = new StringBuilder();
+    public static final StringBuilder noerrorsString = new StringBuilder();
     public final StringBuilder errorsString = new StringBuilder();
 
     @Override
@@ -101,8 +103,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                             Log.w("check result", response.toString());
 
                             JSONObject result = new JSONObject(response.toString());
-                            JSONArray errors = new JSONArray();
-                            JSONArray noerrors = new JSONArray();
+
                             boolean success = false;
 
                             //If no errors return to home screen, else display errors
@@ -117,7 +118,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 noerrors = result.getJSONArray("noerrors");
 
                             if(success) {
-                                final StringBuilder noerrorsString = new StringBuilder();
                                 if(noerrors.length() > 0){
                                     for(int i = 0; i < noerrors.length(); ++i) {
                                         noerrorsString.append(noerrors.getString(i)).append("\n");
