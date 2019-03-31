@@ -7,6 +7,10 @@ import android.widget.TextView;
 
 public class DisplayRecommendations extends AppCompatActivity {
 
+    /**
+     * Display recommendations to user
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

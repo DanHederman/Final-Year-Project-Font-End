@@ -14,7 +14,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".AddReview"></activity>
-        <activity android:name="com.abc.scanner.AddReview" />
         <activity android:name=".DisplayRecommendations" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -24,7 +23,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".Scanner" />
         <activity android:name=".HomeScreenActivity" />
         <activity android:name=".scanbook" />
     </application>

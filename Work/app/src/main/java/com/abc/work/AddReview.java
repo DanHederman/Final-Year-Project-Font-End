@@ -35,17 +35,32 @@ public class AddReview extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_review);
+
+        //Set variable for barcode and set barcode variable in HomeScreen to null
         bookISBN = HomeScreenActivity.barcode;
         HomeScreenActivity.barcode = null;
 
+        //Buttons
         Button postReview = findViewById(R.id.postReviewBtn);
+        Button homeScreen = findViewById(R.id.homeScreenBtn);
 
+        //Spinner to allow user to select rating for book
         Spinner reviewSpinner = findViewById(R.id.reviewSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         reviewSpinner.setAdapter(adapter);
         reviewSpinner.setOnItemSelectedListener(this);
 
+        //Take user back to homescreen
+        homeScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent TakeMeHomeIntent = new Intent(AddReview.this, HomeScreenActivity.class);
+                AddReview.this.startActivity(TakeMeHomeIntent);
+            }
+        });
+
+        //Pass review to server
         postReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

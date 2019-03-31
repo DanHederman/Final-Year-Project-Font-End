@@ -35,14 +35,16 @@ public class RegisterActivity extends AppCompatActivity {
         // Handle UI stuff on main thread
         handler = new Handler(Looper.getMainLooper());
 
-
+        //Fields to get user info
         final EditText etAge = findViewById(R.id.etAge);
         final EditText etUname = findViewById(R.id.etUname);
         final EditText etName = findViewById(R.id.etName);
         final EditText etPassword = findViewById(R.id.etPassword);
 
+        //Button
         final Button btnRegister = findViewById(R.id.btnRegister);
 
+        //Send user info to server
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

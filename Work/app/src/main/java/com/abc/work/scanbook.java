@@ -19,6 +19,9 @@ import static android.Manifest.permission.CAMERA;
 
 public class scanbook extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
+    /**
+     * Class to scan the barcode of a book
+     */
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView scannerView;
 

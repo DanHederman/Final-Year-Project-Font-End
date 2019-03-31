@@ -24,6 +24,7 @@ import java.net.URLEncoder;
 
 public class HomeScreenActivity extends AppCompatActivity {
 
+    //Required variables
     public static String barcode = null;
     public static String noerrors1;
     public static JSONArray errors = new JSONArray();
@@ -38,8 +39,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
+        //Buttons
         Button scannerbtn = findViewById(R.id.scannerbtn);
-
         Button rec = findViewById(R.id.recbtn);
 
         scannerbtn.setOnClickListener(new View.OnClickListener() {
@@ -49,6 +50,7 @@ public class HomeScreenActivity extends AppCompatActivity {
             }
         });
 
+        //Get recommendations from server
         rec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,6 +169,7 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     }
 
+    //Open the scanner
     public void openScanner(){
         Intent intent = new Intent( this, scanbook.class);
         startActivity(intent);

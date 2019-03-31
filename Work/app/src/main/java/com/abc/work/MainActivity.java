@@ -26,6 +26,9 @@ import java.net.URLEncoder;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Class to login or allow user to register
+     */
     private Handler handler;
     public static String Final_user_id;
 
@@ -36,13 +39,17 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler((Looper.getMainLooper()));
 
+        //Fields for login
         final EditText etUnameLog= findViewById(R.id.etUnameLog);
         final EditText etPasswordLog = findViewById(R.id.etPasswordLog);
 
+        //Buttons
         final Button btnLogin = findViewById(R.id.btnLogin);
-
         final Button btnRegisterHere = findViewById(R.id.btnRegisterHere);
 
+        /**
+         * Open register user activity
+         */
         btnRegisterHere.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Log user in
+         */
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
