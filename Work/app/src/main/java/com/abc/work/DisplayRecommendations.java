@@ -1,8 +1,11 @@
 package com.abc.work;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class DisplayRecommendations extends AppCompatActivity {
@@ -21,5 +24,15 @@ public class DisplayRecommendations extends AppCompatActivity {
         recommendations.setText(HomeScreenActivity.noerrorsString);
 
         recommendations.setTextColor(Color.WHITE);
+
+        Button homeBtn = findViewById(R.id.homeScreenBtn);
+
+        homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent TakeMeHomeIntent = new Intent(DisplayRecommendations.this, HomeScreenActivity.class);
+                DisplayRecommendations.this.startActivity(TakeMeHomeIntent);
+            }
+        });
     }
 }
