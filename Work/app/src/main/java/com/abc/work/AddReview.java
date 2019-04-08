@@ -2,6 +2,7 @@ package com.abc.work;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -25,31 +28,29 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class AddReview extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddReview extends AppCompatActivity {
 
     public static JSONArray errors = new JSONArray();
-    public String review;
+    public int review;
     public String bookISBN;
+
+    private static SeekBar ratingsBar;
+    private static TextView seeRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_review);
+        rate();
 
         //Set variable for barcode and set barcode variable in HomeScreen to null
         bookISBN = HomeScreenActivity.barcode;
         HomeScreenActivity.barcode = null;
+        seeRating.setTextColor(Color.WHITE);
 
         //Buttons
         Button postReview = findViewById(R.id.postReviewBtn);
         Button homeScreen = findViewById(R.id.homeScreenBtn);
-
-        //Spinner to allow user to select rating for book
-        Spinner reviewSpinner = findViewById(R.id.reviewSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.numbers, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        reviewSpinner.setAdapter(adapter);
-        reviewSpinner.setOnItemSelectedListener(this);
 
         //Take user back to homescreen
         homeScreen.setOnClickListener(new View.OnClickListener() {
@@ -82,9 +83,14 @@ public class AddReview extends AppCompatActivity implements AdapterView.OnItemSe
                             conn.setDoInput(true);
                             conn.setUseCaches(false);
 
+                            review = ratingsBar.getProgress();
+                            String r = Integer.toString(review);
+
+                            //Log.w("Check Builder", review);
+
                             String builder = URLEncoder.encode("param", "UTF-8") + "=" + URLEncoder.encode(MainActivity.Final_user_id) +
                                     "&" + URLEncoder.encode("paramm", "UTF-8") + "=" + URLEncoder.encode(bookISBN) +
-                                    "&" + URLEncoder.encode("parammm", "UTF-8") + "=" + URLEncoder.encode(review);
+                                    "&" + URLEncoder.encode("parammm", "UTF-8") + "=" + URLEncoder.encode(r);
                             Log.w("Check Builder", builder);
 
                             OutputStream os = conn.getOutputStream();
@@ -121,6 +127,7 @@ public class AddReview extends AppCompatActivity implements AdapterView.OnItemSe
                             if(result.has("errors") && !result.isNull("errors"))
                                 errors = result.getJSONArray("errors");
 
+                            Log.w("review success", response.toString());
 
                             if(success) {
 
@@ -142,13 +149,36 @@ public class AddReview extends AppCompatActivity implements AdapterView.OnItemSe
         });
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        review = adapterView.getItemAtPosition(i).toString();
-    }
+    /**
+     *  A users rating of a book that has been scanned is gathered from
+     *  a seek bar that also displays the rating above it before the
+     *  user posts teh rating to the server
+     */
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
+    public void rate(){
 
+        ratingsBar = findViewById(R.id.Rate);
+        seeRating = findViewById(R.id.seeRatings);
+
+        seeRating.setText("Rating: " + ratingsBar.getProgress() + "/" + ratingsBar.getMax());
+
+        ratingsBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int rateprogress;
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                rateprogress = progress;
+                seeRating.setText("Rating: " + ratingsBar.getProgress() + "/" + ratingsBar.getMax());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 }
