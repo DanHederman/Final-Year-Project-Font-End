@@ -96,6 +96,10 @@ public class HomeScreenActivity extends AppCompatActivity {
 
                             Log.w("check result", response.toString());
 
+                            String apres [] = response.toString().split("\\n");
+
+                            Log.w("check result 2", apres.toString());
+
                             JSONObject result = new JSONObject(response.toString());
 
                             boolean success = false;

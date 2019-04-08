@@ -52,6 +52,8 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
     {
         super.onResume();
 
+        Toast.makeText(scanbook.this, "Please scan the book barcode", Toast.LENGTH_LONG).show();
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
             if(checkPermission()){
