@@ -28,10 +28,11 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanbook);
+
+        scannerView = new ZXingScannerView(this);
+        setContentView(scannerView);
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(checkPermission()){
-
                 Toast.makeText(scanbook.this, "Permission granted", Toast.LENGTH_LONG).show();
             }
             else{
@@ -47,6 +48,7 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
     private void requestPermission(){
         ActivityCompat.requestPermissions(this, new String []{CAMERA}, REQUEST_CAMERA);
     }
+
     @Override
     public void onResume()
     {
