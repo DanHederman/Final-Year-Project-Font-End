@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class DisplayRecommendations extends AppCompatActivity {
 
-    public String r;
+    public TextView recommendations;
 
     /**
      * Display recommendations to user
@@ -22,25 +22,15 @@ public class DisplayRecommendations extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_recommendations);
 
-        TextView recommendations = findViewById(R.id.viewRec);
+        recommendations = findViewById(R.id.viewRec);
 
-//        for(int i = 0; i <= 8; i++) {
-//            myTextView.append(RecArray[i]);
-//        }
-
-        r = HomeScreenActivity.noerrorsString.toString();
-
-        String rec [] = r.split("\\n");
-
-        recommendations.setText(r);
+        recommendations.setText(null);
+        recommendations.setText(HomeScreenActivity.noerrorsString);
 
         recommendations.setTextColor(Color.WHITE);
 
         Button homeBtn = findViewById(R.id.homeScreenBtn);
 
-        String RecArray [] = HomeScreenActivity.noerrorsString.toString().split("\n");
-
-        Log.w("Array", RecArray[0]);
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

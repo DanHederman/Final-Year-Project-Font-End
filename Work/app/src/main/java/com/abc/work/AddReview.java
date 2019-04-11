@@ -143,6 +143,8 @@ public class AddReview extends AppCompatActivity {
                             Log.e("HomeScreenActivity", e.getLocalizedMessage());
 
                         }
+                        Intent TakeMeHomeIntent = new Intent(AddReview.this, HomeScreenActivity.class);
+                        AddReview.this.startActivity(TakeMeHomeIntent);
                     }
                 }).start();
             }

@@ -145,7 +145,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                                         //Toast.makeText(RegisterActivity.this, errorsString.toString(), Toast.LENGTH_LONG);
 
                                         new AlertDialog.Builder(HomeScreenActivity.this)
-                                                .setTitle("Register Failed")
+                                                .setTitle("Rec Failed")
                                                 .setMessage(errorsString.toString())
                                                 .setNegativeButton("Retry", new DialogInterface.OnClickListener() {
                                                     @Override

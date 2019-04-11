@@ -31,6 +31,8 @@ public class scanbook extends AppCompatActivity implements ZXingScannerView.Resu
 
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
+
+
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(checkPermission()){
                 Toast.makeText(scanbook.this, "Permission granted", Toast.LENGTH_LONG).show();
