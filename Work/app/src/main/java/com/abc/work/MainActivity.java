@@ -171,9 +171,6 @@ public class MainActivity extends AppCompatActivity {
                         {
                             Log.e("RegisterActivity", e.getLocalizedMessage());
                         }
-                        finally{
-                            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }).start();
             }

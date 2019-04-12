@@ -167,9 +167,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
-                            Toast.makeText(HomeScreenActivity.this, "Error: Cannot Connect to Server", Toast.LENGTH_SHORT).show();
                             Log.e("HomeScreenActivity", e.getLocalizedMessage());
-
                         }
                     }
                 }).start();
