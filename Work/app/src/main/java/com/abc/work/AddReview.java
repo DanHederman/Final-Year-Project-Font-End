@@ -141,7 +141,7 @@ public class AddReview extends AppCompatActivity {
                         catch(Exception e)
                         {
                             Log.e("HomeScreenActivity", e.getLocalizedMessage());
-
+                            Toast.makeText(AddReview.this, "Error: Cannot Connect to server", Toast.LENGTH_SHORT).show();
                         }
                         Intent TakeMeHomeIntent = new Intent(AddReview.this, HomeScreenActivity.class);
                         AddReview.this.startActivity(TakeMeHomeIntent);

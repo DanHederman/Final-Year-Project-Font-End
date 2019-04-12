@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -169,6 +170,9 @@ public class MainActivity extends AppCompatActivity {
                         catch(Exception e)
                         {
                             Log.e("RegisterActivity", e.getLocalizedMessage());
+                        }
+                        finally{
+                            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).start();

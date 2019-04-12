@@ -4,14 +4,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 public class DisplayRecommendations extends AppCompatActivity {
-
-    public TextView recommendations;
 
     /**
      * Display recommendations to user
@@ -22,16 +19,18 @@ public class DisplayRecommendations extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_recommendations);
 
-        recommendations = findViewById(R.id.viewRec);
+        TextView recommendations = findViewById(R.id.viewRec);
 
-        recommendations.setText(null);
+        recommendations.invalidate();
+
+        //Get recommendations from variable in HomeScreenActivity
         recommendations.setText(HomeScreenActivity.noerrorsString);
 
         recommendations.setTextColor(Color.WHITE);
 
         Button homeBtn = findViewById(R.id.homeScreenBtn);
 
-
+        //Take user back to Home Screen
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

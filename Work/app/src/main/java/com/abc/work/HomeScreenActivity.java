@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -31,7 +32,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     public static JSONArray noerrors = new JSONArray();
     private Handler handler;
 
-    public static final StringBuilder noerrorsString = new StringBuilder();
+    public static StringBuilder noerrorsString = new StringBuilder();
     public final StringBuilder errorsString = new StringBuilder();
 
     @Override
@@ -94,6 +95,13 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 }
                             }
 
+                            /**
+                             * Must null string builder to avoid
+                             * textview display more then one
+                             * list of recommendations
+                             */
+                            noerrorsString.delete(0, noerrorsString.length());
+
                             Log.w("check result", response.toString());
 
                             String apres [] = response.toString().split("\\n");
@@ -123,7 +131,6 @@ public class HomeScreenActivity extends AppCompatActivity {
                                 }
                                 Log.w("Rec", noerrorsString.toString());
                                 noerrors1 = noerrors.toString();
-                                //noerrors1 = noerrors.toString().substring(0, noerrors.length() - 29);
                                 Log.w("This is recommendations", noerrors.toString());
                                 Log.w("This recommendations1", noerrors1);
 
@@ -160,6 +167,7 @@ public class HomeScreenActivity extends AppCompatActivity {
                         }
                         catch(Exception e)
                         {
+                            Toast.makeText(HomeScreenActivity.this, "Error: Cannot Connect to Server", Toast.LENGTH_SHORT).show();
                             Log.e("HomeScreenActivity", e.getLocalizedMessage());
 
                         }
